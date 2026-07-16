@@ -23,3 +23,4 @@ Branch: `feature/1-net10-upgrade`
 ## Windows-only follow-ups (cannot verify on macOS)
 - Open the solution in **Visual Studio 2026** and confirm all projects load (the `.sln` VS-version header updates on first open; the SDK-style SQL project loads under VS 2026's SQL tooling).
 - Build/publish the `DemoSql` DACPAC against a **SQL Server 2025** instance and run the full test suite against LocalDB.
+- Regenerate the `DemoRepository` EF entities and `DemoSqlContext` with **EF Core Power Tools** (EF Core 10) against the SQL Server 2025 schema. The package references are already on EF Core 10.0.10, but the generated code itself was not regenerated in this upgrade (Power Tools runs in Visual Studio on Windows; config in `efpt.config.json`).
