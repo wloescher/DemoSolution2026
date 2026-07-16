@@ -14,10 +14,11 @@ SERVICES LAYER
 - Utilities
   
 PRESENTATION LAYER (Bootstrap, FontAwesome)
-- Angular v16 (Work in Progress)
-- React v19 (Work in Progress)
+- Angular v16
+- React v19
+- Vue v3.5
+- Razor .NET 10
+- Blazor .NET 10
 
 Still to come...
-  - Vue
-  - Blazor
-  - Razor
+  - MudBlazor v9.7
