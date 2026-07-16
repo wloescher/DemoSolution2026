@@ -5,7 +5,7 @@ using DemoWebApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,25 +30,21 @@ builder.Services.AddSwaggerGen(options =>
         BearerFormat = "JWT",
     });
 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                          new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = JwtBearerDefaults.AuthenticationScheme
-                                }
-                            },
-                            Array.Empty<string>()
-                    }
-                });
+    // Microsoft.OpenApi v2 (pulled by Swashbuckle 10) removed the Reference property from
+    // OpenApiSecurityScheme; references are now expressed via OpenApiSecuritySchemeReference,
+    // and AddSecurityRequirement takes a Func<OpenApiDocument, OpenApiSecurityRequirement>.
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecuritySchemeReference(JwtBearerDefaults.AuthenticationScheme, document, null),
+            new List<string>()
+        }
+    });
 });
 
 builder.Services.ConfigureSwaggerGen(setup =>
 {
-    setup.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    setup.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "Demo Web API",
         Version = "v1"
@@ -68,7 +64,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ClockSkew = TimeSpan.Zero
         };
     });
-//.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 // Configure CORS (Cross-Origin Requests)
 builder.Services.AddCors(options =>

@@ -1,14 +1,14 @@
 WORK IN PROGRESS
 
-Full-Stack Visual Studio 2022 solution
+Full-Stack Visual Studio 2026 solution
 
 DATA LAYER
-- SQL 2019 Database
+- SQL Server 2025 Database (SDK-style SQL project, Microsoft.Build.Sql)
 - Repository (Entity Framework, EF Core Power Tools)
 - Models
 
 SERVICES LAYER
-- Services (C# / .NET Core (v8) / Dependency Injection / Interfaces)
+- Services (C# / .NET 10 / Dependency Injection / Interfaces)
 - Web API (JWT Authentication)
 - Tests
 - Utilities
