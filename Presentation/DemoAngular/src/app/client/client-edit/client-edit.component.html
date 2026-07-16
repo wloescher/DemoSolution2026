@@ -1,0 +1,179 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>{{ id === 0 ? "Add" : "Edit" }} Client</h1>
+    </div>
+    <div class="col text-end mt-2">
+      <button class="btn btn-light border me-2" routerLink="/clients">
+        <fa-icon [icon]="faX"></fa-icon> Cancel
+      </button>
+      <button type="submit" class="btn btn-primary" (click)="saveClient()">
+        <fa-icon [icon]="faSave"></fa-icon> Save
+      </button>
+    </div>
+  </div>
+  <form>
+    <div class="row mb-2">
+      <div class="col">
+        <div class="mb-3">
+          <label for="name" class="form-label">Company Name</label>
+          <input
+            type="text"
+            class="form-control required"
+            required
+            id="name"
+            name="name"
+            [(ngModel)]="client.name"
+            #name="ngModel"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="typeId" class="form-label">Client Type</label>
+          <select
+            class="form-select required"
+            required
+            aria-label="Type"
+            id="typeId"
+            name="typeId"
+            [(ngModel)]="client.TypeId"
+          >
+            <option
+              *ngFor="let clientType of clientTypes"
+              [value]="client.value"
+            >
+              {{ clientType.label }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="phoneNumber" class="form-label">Phone Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="phoneNumber"
+            name="phoneNumber"
+            [(ngModel)]="client.phoneNumber"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="url" class="form-label">URL / Website</label>
+          <input
+            type="url"
+            class="form-control"
+            id="url"
+            name="url"
+            [(ngModel)]="client.url"
+          />
+        </div>
+        <div class="mb-3">
+          <div class="form-check">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="isActive"
+              name="isActive"
+              [(ngModel)]="client.isActive"
+            />
+            <label class="form-check-label" for="isActive"> Active </label>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-header">Address</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="address1" class="form-label">Address</label>
+              <input
+                type="text"
+                class="form-control mb-3"
+                id="addressLine1"
+                name="addressLine1"
+                placeholder="Line 1..."
+                [(ngModel)]="client.addressLine1"
+              />
+              <input
+                type="text"
+                class="form-control"
+                id="addressLine2"
+                name="addressLine2"
+                placeholder="Line 2..."
+                [(ngModel)]="client.addressLine2"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="city" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                id="city"
+                name="city"
+                [(ngModel)]="client.city"
+              />
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="mb-3">
+                  <label for="region" class="form-label">Region</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    list="datalistOptions"
+                    id="region"
+                    name="region"
+                    placeholder="Type to search..."
+                    [(ngModel)]="client.region"
+                  />
+                  <datalist id="region">
+                    <option
+                      *ngFor="let region of regions"
+                      [value]="region.value"
+                    >
+                      {{ region.label }}
+                    </option>
+                  </datalist>
+                </div>
+              </div>
+              <div class="col">
+                <div class="mb-3">
+                  <label for="postalCode" class="form-label">Postal Code</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="postalCode"
+                    name="postalCode"
+                    [(ngModel)]="client.postalCode"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="country" class="form-label">Country</label>
+              <select
+                class="form-select"
+                aria-label="Country"
+                id="country"
+                name="country"
+                [(ngModel)]="client.country"
+              >
+                <option
+                  *ngFor="let country of countries"
+                  [value]="country.value"
+                >
+                  {{ country.label }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="id != 0" class="row">
+    <div class="col text-end">
+      <button class="btn btn-danger" (click)="deleteClient()">
+        <fa-icon [icon]="faTrash"></fa-icon> Delete
+      </button>
+    </div>
+  </div>
+</div>

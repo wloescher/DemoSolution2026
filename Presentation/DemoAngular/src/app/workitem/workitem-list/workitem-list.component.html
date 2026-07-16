@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col">
+      <h1>Work Item List</h1>
+    </div>
+    <div class="col text-end">
+      <div class="btn-group border" role="group">
+        <a class="btn btn-outline-secondary" routerLink="/workitems">ALL</a>
+        <a class="btn btn-outline-secondary" routerLink="/workitems/user-story" routerLinkActive="btn-info">User Stories</a>
+        <a class="btn btn-outline-secondary" routerLink="/workitems/task" routerLinkActive="btn-info">Tasks</a>
+        <a class="btn btn-outline-secondary" routerLink="/workitems/bug" routerLinkActive="btn-info">Bugs</a>
+        <a class="btn btn-outline-secondary" routerLink="/workitems/epic" routerLinkActive="btn-info">Epics</a>
+        <a class="btn btn-outline-secondary" routerLink="/workitems/feature" routerLinkActive="btn-info">Features</a>
+      </div>
+    </div>
+    <div class="col-1 text-end">
+      <button class="btn btn-primary" routerLink="/workitem/add"><fa-icon [icon]="faAdd"></fa-icon> Add</button>
+    </div>
+  </div>
+  <app-generic-table [headers]="headers" [data]="getFilteredWorkItems()" (rowClicked)="handleRowClick($event)" [clickableColumns]="clickableColumns"></app-generic-table>
+</div>

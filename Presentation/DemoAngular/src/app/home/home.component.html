@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <button class="btn" routerLink="/clients">Clients</button>
+        </div>
+        <div class="card-body">
+          <app-generic-table [headers]="clientHeaders" [data]="clients" (rowClicked)="handleClientRowClick($event)" [clickableColumns]="clientClickableColumns"></app-generic-table>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-header">
+          <button class="btn" routerLink="/users">Users</button>
+        </div>
+        <div class="card-body">
+          <app-generic-table [headers]="userHeaders" [data]="users" (rowClicked)="handleUserRowClick($event)" [clickableColumns]="userClickableColumns"></app-generic-table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <button class="btn" routerLink="/workitems">Work Items</button>
+    </div>
+    <div class="card-body">
+      <app-generic-table [headers]="workItemHeaders" [data]="workItems" (rowClicked)="handleWorkItemRowClick($event)" [clickableColumns]="workItemClickableColumns"></app-generic-table>
+    </div>
+  </div>
+</div>

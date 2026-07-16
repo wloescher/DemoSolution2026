@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h1>View Client</h1>
+    </div>
+    <div class="col text-end mt-2">
+      <button class="btn btn-primary"  routerLink="/client/edit/{{ client.id }}"><fa-icon [icon]="faPencil"></fa-icon> Edit</button>
+    </div>
+  </div>
+  <div class="container data">
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Id
+      </div>
+      <div class="col-10 col-value">
+        {{ client.id }}
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Guid
+      </div>
+      <div class="col-10 col-value">
+        {{ client.guid }}
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        TypeId
+      </div>
+      <div class="col-10 col-value">
+        {{ client.typeId }}
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Type
+      </div>
+      <div class="col-10 col-value">
+        {{ client.type }}
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Name
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.name }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Address (Line 1)
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.addressLine1 }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Address (Line 2)
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.addressLine2 }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        City
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.city }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Region
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.region }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Postal Code
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.postalCode }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Country
+      </div>
+      <div class="col-10 col-value">
+        <div>{{ client.country }}</div>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        Phone Number
+      </div>
+      <div class="col-10 col-value">
+        <a href="tel:{{ client.phoneNumber }}" target="_blank">{{ client.phoneNumber }}</a>
+      </div>
+    </div>
+    <div class="row data-row">
+      <div class="col-2 col-key">
+        URL / Website
+      </div>
+      <div class="col-10 col-value">
+        <a href="{{ client.url }}" target="_blank">{{ client.url }}</a>
+      </div>
+    </div>
+  </div>
+</div>

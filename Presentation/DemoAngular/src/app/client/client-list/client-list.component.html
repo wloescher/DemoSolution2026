@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row mt-3">
+    <div class="col">
+      <h1>Client List</h1>
+    </div>
+    <div class="col text-end">
+      <div class="btn-group border" role="group" >
+        <a class="btn btn-outline-secondary" routerLink="/clients">ALL</a>
+        <a class="btn btn-outline-secondary" routerLink="/clients/internal" routerLinkActive="bg-info">Internals</a>
+        <a class="btn btn-outline-secondary" routerLink="/clients/external" routerLinkActive="bg-info">Externals</a>
+        <a class="btn btn-outline-secondary" routerLink="/clients/lead" routerLinkActive="bg-info">Leads</a>
+      </div>
+    </div>
+    <div class="col-1 text-end">
+      <button class="btn btn-primary" routerLink="/client/add"><fa-icon [icon]="faAdd"></fa-icon> Add</button>
+    </div>
+  </div>
+  <app-generic-table [headers]="headers" [data]="getFilteredClients()" (rowClicked)="handleRowClick($event)" [clickableColumns]="clickableColumns"></app-generic-table>
+</div>

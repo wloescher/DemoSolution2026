@@ -1,0 +1,18 @@
+SELECT id = UserId,
+		[guid] = [Guid],
+		typeId = TypeId,
+		[type] = [Type],
+		isActive = IsActive,
+    isDeleted = CONVERT(BIT, 0),
+		emailAddress = EmailAddress,
+		firstName = IsNull(FirstName, ''),
+		middleName = IsNull(MiddleName, ''),
+		lastName = IsNull(LastName, ''),
+		addressLine1 = IsNull(AddressLine1, ''),
+		addressLine2 = IsNull(AddressLine2, ''),
+		city = IsNull(City, ''),
+		region = IsNull(Region, ''),
+		postalCode = IsNull(PostalCode, ''),
+		country = IsNull(Country, ''),
+		phoneNumber = IsNull(PhoneNumber, '')
+FROM UserView FOR JSON PATH
