@@ -1,107 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Sdk="Microsoft.Build.Sql/2.2.0">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Name>DemoSql</Name>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{da9a63ab-2e8a-4fa3-a474-53230c9c284f}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
-    <OutputType>Database</OutputType>
-    <RootPath>
-    </RootPath>
     <RootNamespace>DemoSql</RootNamespace>
     <AssemblyName>DemoSql</AssemblyName>
+    <!-- SQL Server 2025 -->
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql170DatabaseSchemaProvider</DSP>
     <ModelCollation>1033, CI</ModelCollation>
-    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
-    <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <TargetLanguage>CS</TargetLanguage>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SqlServerVerification>False</SqlServerVerification>
-    <IncludeCompositeObjects>True</IncludeCompositeObjects>
-    <TargetDatabaseSet>True</TargetDatabaseSet>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <DefineDebug>false</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
-    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineDebug>true</DefineDebug>
-    <DefineTrace>true</DefineTrace>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
-    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
-    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
-  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+
+  <!-- The Microsoft.Build.Sql SDK globs **/*.sql as schema (Build) objects. All schema lives
+       under Tables/ and Views/; the root-level *.sql files are seed / test-data scripts (INSERTs),
+       so exclude them from the build model and keep them in the project as plain content. -->
   <ItemGroup>
-    <Folder Include="Properties" />
-    <Folder Include="Views" />
-    <Folder Include="Tables" />
-  </ItemGroup>
-  <ItemGroup>
-    <Build Include="Views\ClientView.sql" />
-    <Build Include="Tables\Client.sql" />
-    <Build Include="Tables\ClientAudit.sql" />
-    <Build Include="Tables\ClientUser.sql" />
-    <Build Include="Tables\DataDictionary.sql" />
-    <Build Include="Tables\DataDictionaryAudit.sql" />
-    <Build Include="Tables\DataDictionaryGroup.sql" />
-    <Build Include="Tables\DataDictionaryGroupAudit.sql" />
-    <Build Include="Tables\User.sql" />
-    <Build Include="Views\UserView.sql" />
-    <Build Include="Views\WorkItemView.sql" />
-    <Build Include="Views\ClientUserView.sql" />
-    <Build Include="Views\ClientAuditView.sql" />
-    <Build Include="Views\UserAuditView.sql" />
-    <Build Include="Views\WorkItemAuditView.sql" />
-    <Build Include="Views\DataDictionaryGroupAuditView.sql" />
-    <Build Include="Views\DataDictionaryAuditView.sql" />
-    <Build Include="Tables\ClientUserAudit.sql" />
-    <Build Include="Views\ClientUserAuditView.sql" />
-    <Build Include="Tables\WorkItemUser.sql" />
-    <Build Include="Tables\WorkItemUserAudit.sql" />
-    <Build Include="Views\WorkItemUserView.sql" />
-    <None Include="01-create-datadictionary-records.sql" />
-    <None Include="03-create-test-client-records.sql" />
-    <None Include="02-create-test-user-records.sql" />
-    <None Include="04-create-test-workitem-records.sql" />
-    <None Include="05-create-test-clientuser-records.sql" />
-    <None Include="06-create-test-workitemuser-records.sql" />
-    <Build Include="Views\WorkItemViewJson.sql" />
-    <Build Include="Views\UserViewJson.sql" />
-    <Build Include="Views\ClientViewJson.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="DemoSql.refactorlog" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="DemoSql.publish.xml" />
+    <Build Remove="*.sql" />
+    <None Include="*.sql" />
     <None Include="demosolution-test-data.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Build Include="Tables\UserAudit.sql" />
-    <Build Include="Tables\WorkItem.sql" />
-    <Build Include="Tables\WorkItemAudit.sql" />
-  </ItemGroup>
+
 </Project>

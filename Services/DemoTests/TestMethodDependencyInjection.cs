@@ -7,7 +7,9 @@ namespace DemoTests
 
     internal class TestMethodDependencyInjection : TestMethodAttribute
     {
-        public override TestResult[] Execute(ITestMethod testMethod)
+        // MSTest 4.x migrated the extensibility surface to async: Execute -> ExecuteAsync
+        // (Task<TestResult[]>) and ITestMethod.Invoke -> InvokeAsync (Task<TestResult>).
+        public override async Task<TestResult[]> ExecuteAsync(ITestMethod testMethod)
         {
             var nParameters = testMethod.ParameterTypes?.Length ?? 0;
             if (nParameters != 0)
@@ -21,11 +23,11 @@ namespace DemoTests
                         injectedArgs[i] = scope.ServiceProvider.GetService(testMethod.ParameterTypes![i].ParameterType)!;
                     }
                 }
-                return [testMethod.Invoke(injectedArgs!)];
+                return [await testMethod.InvokeAsync(injectedArgs!)];
             }
             else
             {
-                return base.Execute(testMethod);
+                return await base.ExecuteAsync(testMethod);
             }
         }
     }
