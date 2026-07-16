@@ -49,17 +49,17 @@
           "contentVersion": "1.0.0.0",
           "resources": [
             {
-              "name": "wloescher-DemoWebApi",
+              "name": "APIM-SERVICE-GOES-HERE",
               "type": "Microsoft.ApiManagement/service",
               "location": "[parameters('resourceLocation')]",
               "properties": {
-                "publisherEmail": "wolf.loescher@hotmail.com",
-                "publisherName": "Wolf Loescher",
+                "publisherEmail": "PUBLISHER-EMAIL-GOES-HERE",
+                "publisherName": "PUBLISHER-NAME-GOES-HERE",
                 "notificationSenderEmail": "apimgmt-noreply@mail.windowsazure.com",
                 "hostnameConfigurations": [
                   {
                     "type": "Proxy",
-                    "hostName": "wloescher-demowebapi.azure-api.net",
+                    "hostName": "apim-service-goes-here.azure-api.net",
                     "encodedCertificate": null,
                     "keyVaultId": null,
                     "certificatePassword": null,
@@ -95,7 +95,7 @@
             },
             {
               "type": "Microsoft.ApiManagement/service/apis",
-              "name": "wloescher-DemoWebApi/DemoWebApi",
+              "name": "APIM-SERVICE-GOES-HERE/DemoWebApi",
               "properties": {
                 "displayName": "DemoWebApi",
                 "apiRevision": "1",
@@ -118,7 +118,7 @@
               },
               "apiVersion": "2019-12-01",
               "dependsOn": [
-                "wloescher-DemoWebApi"
+                "APIM-SERVICE-GOES-HERE"
               ]
             }
           ]
