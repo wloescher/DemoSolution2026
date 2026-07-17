@@ -19,3 +19,6 @@ node_modules/
 # Test / tooling output
 [Tt]est[Rr]esults/
 *.dacpac
+
+# macOS
+.DS_Store

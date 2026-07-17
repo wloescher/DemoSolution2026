@@ -29,8 +29,8 @@ Branch: `feature/1-net10-upgrade`
 
 # TASKS — Make DemoTests run & pass on macOS/Linux (InMemory)
 
-Tracking issue: _pending_ — create via `gh-new-issue` after `gh auth refresh -h github.com -s project,read:project`.
-Branch: `feature/inmemory-tests` (rename to `feature/<n>-inmemory-tests` once the issue number is known).
+Tracking issue: [#5](https://github.com/wloescher/DemoSolution2026/issues/5) (merged via [PR #6](https://github.com/wloescher/DemoSolution2026/pull/6))
+Branch: `feature/5-inmemory-tests`
 
 ## Goal
 `dotnet test Services/DemoTests/DemoTests.csproj` builds and passes on macOS/Linux with no SQL
@@ -51,9 +51,8 @@ platform`.
       (`PhysicalFileProvider` + `ExclusionFilters.None`); inject test config into the host.
 - [x] Verify: all 54 tests pass on macOS (`~/.dotnet/dotnet test`), stable across repeated runs.
 - [x] Update repo `CLAUDE.md` Tests section and `appsettings.json` comment; add `.gitignore`.
-- [ ] Code-review gate on the working-tree diff (block on high-confidence correctness findings).
-- [ ] Create the GitHub issue, associate the commit (`#<n>`), push, open a PR (`Closes #<n>`) —
-      blocked on `gh` re-auth.
+- [x] Code-review gate on the working-tree diff (block on high-confidence correctness findings).
+- [x] Create the GitHub issue (#5), associate the commit, push, open a PR (`Closes #5`) — merged as PR #6.
 
 ## Verification results
 - **Build:** `dotnet build` clean (0 errors). **Tests:** `~/.dotnet/dotnet test` → **54 passed / 0
