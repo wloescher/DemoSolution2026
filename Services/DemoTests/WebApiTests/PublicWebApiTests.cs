@@ -18,7 +18,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<PublicController>();
+            await using var application = new DemoWebApiFactory<PublicController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync("/public/secretkey");
 

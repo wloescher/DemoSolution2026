@@ -1,0 +1,21 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+
+# Visual Studio / Rider / user files
+.vs/
+.idea/
+*.user
+*.suo
+
+# Claude Code machine-specific settings
+.claude/settings.local.json
+
+# Node (front-end projects)
+node_modules/
+
+# Test / tooling output
+[Tt]est[Rr]esults/
+*.dacpac

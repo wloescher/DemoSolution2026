@@ -22,7 +22,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<TestController>();
+            await using var application = new DemoWebApiFactory<TestController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync("/test/client");
 
@@ -55,7 +55,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<TestController>();
+            await using var application = new DemoWebApiFactory<TestController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync("/test/user");
 
@@ -88,7 +88,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<TestController>();
+            await using var application = new DemoWebApiFactory<TestController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync("/test/workItem");
 
