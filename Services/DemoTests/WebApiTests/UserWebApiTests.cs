@@ -127,7 +127,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync("/user");
 
@@ -153,7 +153,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.GetAsync("/user/list");
@@ -191,7 +191,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync(string.Format("/user/{0}", userId));
 
@@ -219,7 +219,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.GetAsync(string.Format("/user/{0}", userId));
@@ -257,7 +257,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync(string.Format("/user/{0}/clients", userId));
 
@@ -285,7 +285,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.GetAsync(string.Format("/user/{0}/clients", userId));
@@ -323,7 +323,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.GetAsync(string.Format("/user/{0}/checkemailaddress", userId));
 
@@ -347,7 +347,7 @@ namespace DemoTests.WebApiTests
         {
             var userId = _testUserIds.First();
             var uniqueEmailAddress = Guid.NewGuid().ToString();
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
 
@@ -441,7 +441,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.PostAsync("/user", content);
 
@@ -469,7 +469,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.PostAsync("/user", content);
@@ -514,7 +514,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.PutAsync(string.Format("/user/{0}", userId), content);
 
@@ -542,7 +542,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.PutAsync(string.Format("/user/{0}", model.UserId), content);
@@ -575,7 +575,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.DeleteAsync(string.Format("/user/{0}", userId));
 
@@ -601,7 +601,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.DeleteAsync(string.Format("/user/{0}", userId));
@@ -635,7 +635,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.PutAsync(string.Format("/user/{0}/client/{1}", userId, clientId), null);
 
@@ -664,7 +664,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.PutAsync(string.Format("/user/{0}/client/{1}", userId, clientId), null);
@@ -698,7 +698,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             var response = await httpClient.DeleteAsync(string.Format("/user/{0}/client/{1}", userId, clientId));
 
@@ -727,7 +727,7 @@ namespace DemoTests.WebApiTests
             stopWatch.Start();
 
             // Make Web API call
-            await using var application = new WebApplicationFactory<UserController>();
+            await using var application = new DemoWebApiFactory<UserController>();
             using var httpClient = application.CreateClient();
             httpClient.DefaultRequestHeaders.Add("authorization", "Bearer demo");
             var response = await httpClient.DeleteAsync(string.Format("/user/{0}/client/{1}", userId, clientId));

@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 using Moq;
 using System.Security.Claims;
 
@@ -28,13 +30,13 @@ namespace DemoTests.BaseClasses
 
         protected TestBase()
         {
-            _dbContextOptions = new DbContextOptionsBuilder<DemoSqlContext>()
-                .UseInMemoryDatabase("DemoSql").Options;
-
             // Configuration
-            var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json");
-            _configuration = configurationBuilder.Build();
+            _configuration = BuildConfiguration();
+
+            // Data access — same provider/shared store as the DI factory and the Web API host.
+            var dbContextOptionsBuilder = new DbContextOptionsBuilder<DemoSqlContext>();
+            TestDatabase.Configure(dbContextOptionsBuilder, _configuration);
+            _dbContextOptions = dbContextOptionsBuilder.Options;
 
             // Configuration Values
             _testClientIds = (_configuration.GetValue<string>("Demo:TestClientIds") ?? string.Empty).Split(',').Select(int.Parse).ToList();
@@ -52,16 +54,14 @@ namespace DemoTests.BaseClasses
         {
             var serviceCollection = new ServiceCollection();
 
-            var configurationBuilder = new ConfigurationBuilder();
-            configurationBuilder.AddJsonFile("appsettings.json");
-            var configuration = configurationBuilder.Build();
+            var configuration = BuildConfiguration();
 
             // Add configuration
             serviceCollection.AddSingleton<IConfiguration>(configuration);
 
-            // Add db context
-            serviceCollection.AddDbContextFactory<DemoSqlContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped
+            // Add db context (InMemory by default; SQL Server when Demo:UseInMemoryDatabase is false)
+            serviceCollection.AddDbContextFactory<DemoSqlContext>(
+                options => TestDatabase.Configure(options, configuration), ServiceLifetime.Scoped
             );
 
             serviceCollection.AddMemoryCache();
@@ -74,6 +74,9 @@ namespace DemoTests.BaseClasses
             serviceCollection.AddSingleton<IWorkItemService, WorkItemService>();
 
             _serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Seed the shared InMemory store once before any test runs (no-op for SQL Server).
+            TestDatabase.Seed(configuration, _serviceProvider.GetRequiredService<IDbContextFactory<DemoSqlContext>>());
         }
 
         [AssemblyCleanup]
@@ -85,6 +88,20 @@ namespace DemoTests.BaseClasses
         internal DemoSqlContext CreateDbContext()
         {
             return new DemoSqlContext(_dbContextOptions);
+        }
+
+        /// <summary>
+        /// Build configuration from <c>appsettings.json</c> in the test output directory.
+        /// Uses a <see cref="PhysicalFileProvider"/> with <see cref="ExclusionFilters.None"/> so
+        /// the file is still found when the output path contains a "hidden" (dot-prefixed) segment
+        /// — e.g. when running from a git worktree under <c>.claude/</c>.
+        /// </summary>
+        internal static IConfiguration BuildConfiguration()
+        {
+            var fileProvider = new PhysicalFileProvider(AppContext.BaseDirectory, ExclusionFilters.None);
+            return new ConfigurationBuilder()
+                .AddJsonFile(fileProvider, "appsettings.json", optional: false, reloadOnChange: false)
+                .Build();
         }
     }
 }

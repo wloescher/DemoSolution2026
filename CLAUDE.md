@@ -86,10 +86,30 @@ mutation to any service, follow this convention and write the corresponding audi
 - CORS origins and other environment specifics are hard-coded per-environment in `Program.cs`.
 
 ### Tests (`DemoTests`)
-- **MSTest + Moq**, with EF Core **InMemory** provider (database name `"DemoSql"`). Tests run
-  in parallel at method level (`MSTestSettings.cs`).
-- `TestBase` builds the service provider, loads `appsettings.json`, and mocks `HttpContext`.
-  Known-good record IDs come from `Demo:Test*Ids` config values.
+- **MSTest + Moq**, running by default against the EF Core **InMemory** provider (database name
+  `"DemoSql"`) so the suite is fully portable — `dotnet test` passes on macOS/Linux with no SQL
+  Server. Tests run in parallel at method level (`MSTestSettings.cs`).
+- Provider selection is config-driven via **`Demo:UseInMemoryDatabase`** (default `true`). Set it
+  to `false` to target the real SQL Server in `ConnectionStrings:DefaultConnection` (e.g. a Windows
+  CI agent), in which case the database must already contain the rows referenced by `Demo:Test*Ids`.
+- `BaseClasses/TestDatabase.cs` owns the shared `InMemoryDatabaseRoot`, the provider config, and a
+  deterministic **seed** (Users 1–6, Clients 1–3, WorkItems 1–3, the ClientUser/WorkItemUser links,
+  and one audit row per entity) matching the `Demo:Test*Ids`. All contexts — the DI factory,
+  `TestBase.CreateDbContext()`, and the Web API test host — share that one seeded store, so
+  `AssemblyInitialize` seeds it exactly once.
+- The five database **views** consumed by the services (`ClientView`, `UserView`, `WorkItemView`,
+  `ClientUserView`, `WorkItemUserView`) are `[Keyless]`/`ToView` and cannot be tracked or seeded by
+  the InMemory provider. `Data/DemoRepository/Entities/DemoSqlContext.InMemory.cs` gives them a
+  synthetic key **only** when the provider is InMemory (a no-op for SQL Server), so they can be
+  seeded; the seeder writes matching rows into both the base tables and the view sets.
+- Web API integration tests boot the real host via **`BaseClasses/DemoWebApiFactory<T>`** (a
+  `WebApplicationFactory` subclass), which swaps the host's `DemoSqlContext` onto the same shared
+  InMemory store and injects the test configuration. Use it instead of `WebApplicationFactory<T>`
+  directly. Auth still flows through the real `JwtMiddleware` (the `"Bearer demo"` token resolves
+  `GetUser(1)` from the seed).
+- `TestBase` builds the service provider, loads `appsettings.json` (via a `PhysicalFileProvider`
+  with exclusion filters disabled so it is found even under a dot-prefixed path such as a
+  `.claude/` worktree), and mocks `HttpContext`. Known-good record IDs come from `Demo:Test*Ids`.
 - `TestHelpers/Compare*.cs` provide model-equality assertions; reuse them instead of writing
   ad-hoc field-by-field comparisons.
 
