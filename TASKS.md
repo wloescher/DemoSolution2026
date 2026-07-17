@@ -66,3 +66,17 @@ platform`.
   view, so this is safe.
 - Uniqueness checks (`CheckForUnique*`) run in service code, not via DB constraints, so InMemory's
   lack of unique-index enforcement is not a problem.
+
+---
+
+# Follow-up: MSTEST0057 caller-info on the DI attribute
+
+Tracking issue: [#3](https://github.com/wloescher/DemoSolution2026/issues/3)
+Branch: `feature/3-mstest-caller-info`
+
+## Tasks
+- [x] Add a `[CallerFilePath]`/`[CallerLineNumber]` constructor to `TestMethodDependencyInjection`, forwarding to the base `TestMethodAttribute` ctor — resolves analyzer warning `MSTEST0057` so test source locations report correctly
+
+## Verification results
+- **Build:** `dotnet build Services/DemoTests/DemoTests.csproj` → 0 warnings, 0 errors (MSTEST0057 gone; base ctor signature `TestMethodAttribute(string callerFilePath, int callerLineNumber)` confirmed against MSTest 4.3.2).
+- **Tests:** rebased on top of the InMemory work above, `~/.dotnet/dotnet test` → **54 passed / 0 failed**, confirming the DI-injection attribute still executes correctly with the new constructor and introduces no regression.

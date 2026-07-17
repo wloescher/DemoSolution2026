@@ -1,5 +1,6 @@
 ﻿using DemoTests.BaseClasses;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 
 namespace DemoTests
 {
@@ -7,6 +8,15 @@ namespace DemoTests
 
     internal class TestMethodDependencyInjection : TestMethodAttribute
     {
+        // MSTest 4.x (MSTEST0057) requires TestMethodAttribute-derived types to capture and forward
+        // the caller's file/line so the runner can report accurate source locations for these tests.
+        public TestMethodDependencyInjection(
+            [CallerFilePath] string callerFilePath = "",
+            [CallerLineNumber] int callerLineNumber = -1)
+            : base(callerFilePath, callerLineNumber)
+        {
+        }
+
         // MSTest 4.x migrated the extensibility surface to async: Execute -> ExecuteAsync
         // (Task<TestResult[]>) and ITestMethod.Invoke -> InvokeAsync (Task<TestResult>).
         public override async Task<TestResult[]> ExecuteAsync(ITestMethod testMethod)
