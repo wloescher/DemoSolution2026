@@ -5,11 +5,14 @@ import { AuthService } from '../services/auth.service';
 export const AuthGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  const isLoggedIn = authService.isLoggedIn;
 
-  if (isLoggedIn) {
+  // isAuthenticated() reads the cookie synchronously, so it is correct on a deep link or a
+  // full page reload — unlike the in-memory isLoggedIn subject, which starts out false.
+  if (authService.isAuthenticated()) {
     return true;
   }
 
-  return router.navigateByUrl('/login');
+  // Return the UrlTree rather than calling navigateByUrl(): that returns a Promise<boolean>
+  // resolving true on a successful redirect, which the router reads as "guard passed".
+  return router.parseUrl('/login');
 };
