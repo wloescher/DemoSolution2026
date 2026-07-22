@@ -20,3 +20,7 @@ PRESENTATION LAYER (Bootstrap, FontAwesome)
 - Razor .NET 10
 - Blazor .NET 10
 - MudBlazor v9.7
+
+SCREENSHOTS
+- Documentation/ holds a screenshot of every page in each Presentation front-end,
+  named <ProjectName>-<PageName>.png (e.g. DemoReact-ClientList.png).

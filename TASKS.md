@@ -111,3 +111,34 @@ Branch: `feature/3-mstest-caller-info`
 ## Verification results
 - **Build:** `dotnet build Services/DemoTests/DemoTests.csproj` → 0 warnings, 0 errors (MSTEST0057 gone; base ctor signature `TestMethodAttribute(string callerFilePath, int callerLineNumber)` confirmed against MSTest 4.3.2).
 - **Tests:** rebased on top of the InMemory work above, `~/.dotnet/dotnet test` → **54 passed / 0 failed**, confirming the DI-injection attribute still executes correctly with the new constructor and introduces no regression.
+
+---
+
+# Follow-up: Presentation front-end page screenshots
+
+Tracking issue: _pending — no issue number provided_
+Branch: `feature/docs-presentation-screenshots`
+
+## Goal
+Capture a screenshot of every page in each of the six Presentation front-ends and commit them to
+`Documentation/`, prefixed with the project name (`<ProjectName>-<PageName>.png`).
+
+## Tasks
+- [x] Add launch configs for all six front-ends to `.claude/launch.json` (DemoBlazor 5139,
+      DemoMudBlazor 5150, DemoRazor 5216, DemoAngular 50395, DemoVue 50400, DemoReact 64940)
+- [x] `npm install` for DemoReact / DemoAngular / DemoVue (no `node_modules` checked in)
+- [x] Capture DemoBlazor (4), DemoMudBlazor (4), DemoRazor (3), DemoVue (1)
+- [x] Capture DemoReact (17) and DemoAngular (17), driving the dummy `admin`/`admin` login form
+      first so the auth-guarded routes render
+- [x] Update `README.md` with a pointer to `Documentation/`
+- [ ] Associate with a GitHub issue, push, open a PR
+
+## Notes / decisions
+- Screenshots are full-page, 1440x900 viewport at 2x device scale, light color scheme, captured
+  headlessly via `playwright-core` driving the installed Google Chrome.
+- No Web API or SQL Server is needed: React and Angular both ship client-side dummy auth
+  (`AuthProvider.jsx` / `auth.service.ts`) and inline test data, so every route renders standalone.
+- Detail/edit pages use ids present in that test data — Client 1, User 3, Work Item 2.
+- `DemoVue` is still the default Vite scaffold, so it has a single page.
+- `DemoBlazor`, `DemoMudBlazor`, and `DemoRazor` are default scaffolds (Home/Counter/Weather/Error
+  and Index/Privacy/Error respectively).
