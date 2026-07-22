@@ -1,3 +1,35 @@
+# TASKS — Add MudBlazor v9.7 Presentation front-end (DemoMudBlazor)
+
+Tracking issue: [#8](https://github.com/wloescher/DemoSolution2026/issues/8)
+Branch: `feature/8-mudblazor`
+
+## Goal
+Add a `DemoMudBlazor` Presentation project — a functional copy of `Presentation/DemoBlazor`
+(.NET 10 Blazor Web App, Interactive Server) re-skinned with **MudBlazor v9.7** in place of
+Bootstrap. No API integration (matches DemoBlazor's self-contained mock-data behavior).
+
+## Tasks
+- [x] Add `MudBlazor` `PackageVersion` (9.7.0) to `Directory.Packages.props`
+- [x] Scaffold `Presentation/DemoMudBlazor` (csproj, `Program.cs` with `AddMudServices()`,
+      appsettings, launchSettings with new ports 5150/7211, wwwroot without Bootstrap)
+- [x] Re-skin `App.razor` (Mud CSS/JS), `_Imports.razor`, `Routes.razor`
+- [x] Rebuild `MainLayout` (MudLayout/MudAppBar/MudDrawer + providers) and `NavMenu` (MudNavMenu)
+- [x] Re-skin pages: Home, Counter (MudButton), Weather (MudTable), Error
+- [x] Register project in `DemoSolution.sln` under the Presentation solution folder
+- [x] Update docs: `README.md`, `CLAUDE.md`, `TASKS.md`
+- [x] Build (project + solution), run and visually verify the Mud shell, run test suite
+
+## Verification results
+- **Build:** `~/.dotnet/dotnet build Presentation/DemoMudBlazor/DemoMudBlazor.csproj` → 0 warnings,
+  0 errors. Solution parses and lists the new project (`dotnet sln list`).
+- **Run:** launched on `http://localhost:5150`; visually verified in browser — Material AppBar +
+  MudDrawer nav, Home (Mud typography), Counter (`MudButton` increments via the interactive Server
+  circuit, `OnClick`), Weather (`MudTable` shows streamed forecast rows).
+- **Tests:** `~/.dotnet/dotnet test Services/DemoTests` → **54 passed / 0 failed** (no regressions;
+  pre-existing `DemoUtilities` warnings only).
+
+---
+
 # TASKS — Upgrade to .NET 10 / Visual Studio 2026 / SQL Server 2025
 
 Tracking issue: [#1](https://github.com/wloescher/DemoSolution2026/issues/1)
