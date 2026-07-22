@@ -131,6 +131,8 @@ Capture a screenshot of every page in each of the six Presentation front-ends an
 - [x] Capture DemoReact (17) and DemoAngular (17), driving the dummy `admin`/`admin` login form
       first so the auth-guarded routes render
 - [x] Update `README.md` with a pointer to `Documentation/`
+- [x] Fix the misplaced quote in the Angular `workitem/:id` route (title string had swallowed
+      `canActivate: [AuthGuard]`), spotted while capturing the screenshots
 - [ ] Associate with a GitHub issue, push, open a PR
 
 ## Notes / decisions

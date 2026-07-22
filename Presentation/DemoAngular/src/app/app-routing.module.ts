@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'workitems', component: WorkItemListComponent, title: "Work Item List - DemoAngular", canActivate: [AuthGuard] },
   { path: 'workitem/add', component: WorkItemEditComponent, title: "Work Item Add - DemoAngular", canActivate: [AuthGuard] },
   { path: 'workitem/edit/:id', component: WorkItemEditComponent, title: "Work Item Edit - DemoAngular", canActivate: [AuthGuard] },
-  { path: 'workitem/:id', component: WorkItemDetailComponent, title: "Work Item Detail - DemoAngular, canActivate: [AuthGuard]" },
+  { path: 'workitem/:id', component: WorkItemDetailComponent, title: "Work Item Detail - DemoAngular", canActivate: [AuthGuard] },
 
   { path: 'error', component: ErrorComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
