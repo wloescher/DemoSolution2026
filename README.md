@@ -1,5 +1,3 @@
-WORK IN PROGRESS
-
 Full-Stack Visual Studio 2026 solution
 
 DATA LAYER
