@@ -38,6 +38,11 @@
     <PackageVersion Include="OpenGraph-Net" Version="4.0.1" />
   </ItemGroup>
 
+  <!-- UI / Blazor -->
+  <ItemGroup>
+    <PackageVersion Include="MudBlazor" Version="9.7.0" />
+  </ItemGroup>
+
   <!-- Test -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />

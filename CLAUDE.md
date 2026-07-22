@@ -8,7 +8,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 layers — **Data**, **Services**, and **Presentation** — each a solution folder in
 `DemoSolution.sln`. It is a work in progress: the Services/Data layers and the Web API are the
 mature parts; the Presentation front-ends are in varying stages of completion (React and Angular
-are furthest along; Blazor and Razor are default scaffolds; Vue is stubbed).
+are furthest along; Blazor and Razor are default scaffolds; Vue is stubbed). `DemoMudBlazor` is a
+copy of `DemoBlazor` re-skinned with **MudBlazor v9.7** (Material Design) instead of Bootstrap.
 
 Backend targets **.NET 10** with **EF Core 10**. SQL Server 2025 is the database. The solution
 opens in **Visual Studio 2026**. NuGet versions are centralized via **Central Package Management**
@@ -34,8 +35,8 @@ still require the Node toolchain, so `dotnet build DemoSolution.sln` will invoke
 - React (`Presentation/DemoReact`): `npm run dev` / `npm run build` / `npm run lint`
 - Angular (`Presentation/DemoAngular`): `npm start` / `npm run build` / `npm test`
 - Vue (`Presentation/DemoVue`): `npm run dev` / `npm run build`
-- Blazor Server (`Presentation/DemoBlazor`) and Razor (`Presentation/DemoRazor`):
-  `dotnet run --project <path>`
+- Blazor Server (`Presentation/DemoBlazor`), MudBlazor (`Presentation/DemoMudBlazor`), and Razor
+  (`Presentation/DemoRazor`): `dotnet run --project <path>`
 
 ## Architecture
 
