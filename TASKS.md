@@ -187,3 +187,48 @@ reference* was truthy and never invoked it — which is how two live defects shi
 - `router.navigateByUrl` is spied and asserted un-called, pinning the UrlTree-over-imperative fix.
 - The 20 unrelated scaffold failures are tracked separately in
   [#13](https://github.com/wloescher/DemoSolution2026/issues/13).
+
+---
+
+# Follow-up: Fix the failing scaffolded Angular specs
+
+Tracking issue: [#13](https://github.com/wloescher/DemoSolution2026/issues/13)
+Branch: `feature/13-angular-specs`
+
+## Goal
+Get `ng test` green in `DemoAngular`. 20 of 21 tests failed — all generated `ng generate`
+scaffolds that were never wired up, none indicating a defect in app code.
+
+## Tasks
+- [x] Add a shared `COMMON_TEST_IMPORTS` (`src/testing/common-test-imports.ts`) mirroring
+      AppModule's imports, rather than repeating the same four modules across 18 spec files
+- [x] Group 1 — `ActivatedRoute` for the 9 CRUD specs (via `RouterTestingModule`)
+- [x] Group 2 — `HttpClient` for `AuthService`, `LoginComponent`, `SiteHeaderComponent`,
+      `HomeComponent` (via `HttpClientTestingModule`)
+- [x] Group 3 — `FontAwesomeModule` for the `<fa-icon>` templates; declare `SiteHeaderComponent`
+      for `AppComponent`; move standalone `GenericTableComponent` from `declarations` to `imports`
+- [x] Add `provideActivatedRouteStub()` (`src/testing/activated-route.stub.ts`) for the three
+      detail specs, which resolve an entity from the `id` param and render it
+- [x] Replace `AppComponent`'s stale "should render title" assertion
+- [x] Suite green and stable
+
+## Verification results
+- **Tests:** `ng test` → **21 passed / 0 failed**, stable across 3 consecutive runs (was 20 failed
+  / 1 passed).
+- **No weakening:** no `xit`/`fdescribe`, no `NO_ERRORS_SCHEMA`/`CUSTOM_ELEMENTS_SCHEMA`, and no
+  production code touched — the diff is spec files plus the two new `src/testing/` helpers.
+- **Build:** `ng build` compiles; only the pre-existing bundle-budget error remains.
+
+## Notes / decisions
+- The three detail specs needed real ids (Client 1, User 3, WorkItem 2 — the same records the
+  screenshot capture uses). With no `id` param they resolve entity 0, get `undefined`, and the
+  template throws on `client.id` during change detection.
+- `AppComponent`'s third generated test asserted `.content span` contained
+  "DemoAngular app is running!". That markup belonged to the Angular starter template and has not
+  existed since `app.component.html` became the site-header + router-outlet shell, so the test
+  could never have passed. Replaced with assertions that the shell renders both elements.
+- These remain `should create` smoke tests. The suite now *runs*, which makes it usable as a
+  pre-commit gate; it is not yet a meaningful behavioral suite. Real assertions per component are
+  separate, larger work.
+- Overlaps with [#12](https://github.com/wloescher/DemoSolution2026/issues/12) / PR #14 only in
+  `TASKS.md`; that PR rewrites `auth.guard.spec.ts`, which this branch deliberately leaves alone.

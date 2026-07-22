@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WorkItemListComponent } from './workitem-list.component';
+import { COMMON_TEST_IMPORTS } from '../../../testing/common-test-imports';
 
 describe('WorkItemListComponent', () => {
   let component: WorkItemListComponent;
@@ -8,6 +9,7 @@ describe('WorkItemListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [...COMMON_TEST_IMPORTS],
       declarations: [WorkItemListComponent]
     });
     fixture = TestBed.createComponent(WorkItemListComponent);
