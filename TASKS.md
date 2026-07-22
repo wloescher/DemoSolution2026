@@ -149,3 +149,41 @@ Capture a screenshot of every page in each of the six Presentation front-ends an
 - `DemoVue` is still the default Vite scaffold, so it has a single page.
 - `DemoBlazor`, `DemoMudBlazor`, and `DemoRazor` are default scaffolds (Home/Counter/Weather/Error
   and Index/Privacy/Error respectively).
+
+---
+
+# Follow-up: Real coverage for the Angular AuthGuard
+
+Tracking issue: [#12](https://github.com/wloescher/DemoSolution2026/issues/12)
+Branch: `feature/12-auth-guard-spec`
+
+## Goal
+Replace the generated `auth.guard.spec.ts`, which asserted only that the guard *function
+reference* was truthy and never invoked it — which is how two live defects shipped undetected.
+
+## Tasks
+- [x] Replace the scaffold spec with real coverage (mocked `AuthService`, real `Router` via
+      `RouterTestingModule`)
+- [x] Assert the guard returns `true` when `isAuthenticated()` is `true`
+- [x] Assert it returns a `/login` `UrlTree` when `isAuthenticated()` is `false` — and specifically
+      **not** `true` and **not** a `Promise`, which is what regressing to `navigateByUrl()` produces
+- [x] Assert it reads cookie-backed `isAuthenticated()` and never touches the always-truthy
+      `isLoggedIn` observable
+- [x] Verify the spec actually fails against the original broken guard
+
+## Verification results
+- **New tests:** 4 pass. Suite went from 21 tests (1 pass) to 24 (4 pass); the 20 pre-existing
+  scaffold failures are unchanged, confirming no regression.
+- **Teeth check:** temporarily restoring the original broken guard turns 3 of the 4 red
+  (`redirects to /login`, `blocks by returning a UrlTree`, `reads the cookie-backed
+  isAuthenticated()`). The fourth — `allows the navigation when the user is authenticated` — passes
+  against both implementations by design: the broken guard also allowed authenticated users, so
+  that test documents intended behavior rather than catching either defect.
+- **Build:** `ng build` compiles; only the pre-existing bundle-budget error remains.
+
+## Notes / decisions
+- `isLoggedIn` is stubbed via `spyOnProperty` to an `Observable` of `false` — still a truthy object,
+  so a guard that regressed to reading it would wrongly allow the navigation and fail the test.
+- `router.navigateByUrl` is spied and asserted un-called, pinning the UrlTree-over-imperative fix.
+- The 20 unrelated scaffold failures are tracked separately in
+  [#13](https://github.com/wloescher/DemoSolution2026/issues/13).
