@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "screenshots": "node scripts/screenshots.mjs"
+  },
   "devDependencies": {
+    "playwright-core": "^1.61.1",
     "typescript": "^5.8.2"
   }
 }

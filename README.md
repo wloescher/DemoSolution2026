@@ -24,3 +24,9 @@ PRESENTATION LAYER (Bootstrap, FontAwesome)
 SCREENSHOTS
 - Documentation/ holds a screenshot of every page in each Presentation front-end,
   named <ProjectName>-<PageName>.png (e.g. DemoReact-ClientList.png).
+- Regenerate them all with `npm run screenshots`, or one project with
+  `npm run screenshots -- DemoReact`. Each dev server is started, captured, and
+  stopped in turn; no Web API or SQL Server is needed. Requires Google Chrome and
+  `npm install` in the JS front-ends (override with DOTNET= / CHROME=).
+- The Weather and Error pages render random data and a per-request id, so those
+  images differ on every run — discard the no-op diffs before committing.
