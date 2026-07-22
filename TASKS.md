@@ -133,6 +133,9 @@ Capture a screenshot of every page in each of the six Presentation front-ends an
 - [x] Update `README.md` with a pointer to `Documentation/`
 - [x] Fix the misplaced quote in the Angular `workitem/:id` route (title string had swallowed
       `canActivate: [AuthGuard]`), spotted while capturing the screenshots
+- [x] Make `AuthGuard` actually enforce auth (it passed unconditionally); verified logged-out
+      access to every guarded route now redirects to `/login`
+- [ ] Replace the vacuous `auth.guard.spec.ts` with a real logged-in/logged-out spec
 - [ ] Associate with a GitHub issue, push, open a PR
 
 ## Notes / decisions
